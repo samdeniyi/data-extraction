@@ -27,11 +27,6 @@ def scrape_lesson_plan(lesson_url):
 		# Parse the page source with BeautifulSoup
 		soup = BeautifulSoup(page_source, "html.parser")
 		
-		# Extract the class, subject, and topic information
-		# class_tag = soup.find("p", string=lambda t: t and "Class:" in t)
-		# subject_tag = soup.find("p", string=lambda t: t and "Subject:" in t)
-		# topic_tag = soup.find("p", string=lambda t: t and "Topic:" in t)
-		
 		class_tag = soup.find("p", string=lambda t: t and re.search(r'class\s*:', t, re.IGNORECASE))
 		subject_tag = soup.find("p", string=lambda t: t and re.search(r'subject\s*:', t, re.IGNORECASE))
 		topic_tag = soup.find("p", string=lambda t: t and re.search(r'topic\s*:', t, re.IGNORECASE))
@@ -43,18 +38,6 @@ def scrape_lesson_plan(lesson_url):
 		lesson_plan_section = soup.find("div", class_="container mt-5").find_next("div", class_="col-sm-12")
 		lesson_plan_table = lesson_plan_section.find_all("table", class_="table")
 		
-		
-		# # Wait for the table to be present in the page
-		# WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//table[@class='table']")))
-		#
-		# # Run JavaScript to ensure the table is visible
-		# table_element = driver.find_element(By.XPATH, "//table[@class='table']")
-		# table_html = table_element.get_attribute('outerHTML')
-		#
-		# # Re-fetch the page source after waiting for the table
-		# soup = BeautifulSoup(table_html, "html.parser")
-		#
-		# lesson_plan_table = soup.find("table")
 		
 		# Extract the lesson plan section up to the table
 		if lesson_plan_table is None or len(lesson_plan_table) == 0:
@@ -104,7 +87,7 @@ def scrape_lesson_plan(lesson_url):
 
 
 def extra_lesson_plan():
-	with open('primary.json', 'r') as file:
+	with open('primary1.json', 'r') as file:
 		lesson_data = json.load(file)
 		for lesson in lesson_data:
 			s_url = lesson.get("URL")
