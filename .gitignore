@@ -2,4 +2,4 @@
 *.json
 *.log
 *.csv
-.idea
+.idea/*
